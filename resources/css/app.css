@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/*
+*{
+    font-family: Parastoo;
+}
+@font-face {
+    font-family: Parastoo;
+    src: url('/assets/fonts-fa/Parastoo.eot');
+    src: url('/assets/fonts-fa/Parastoo.eot?#iefix') format('Parastoo-opentype'),
+    url('/assets/fonts-fa/Parastoo.woff') format('woff'),
+    url('/assets/fonts-fa/Parastoo.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Parastoo;
+    src: url('/assets/fonts-fa/arastoo-Bold.eot');
+    src: url('/assets/fonts-fa/Parastoo-Bold.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts-fa/arastoo-Bold.woff') format('woff'),
+    url('/assets/fonts-fa/arastoo-Bold.ttf') format('truetype');
+    font-weight: bold;
+}*/
