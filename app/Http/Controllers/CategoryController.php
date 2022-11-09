@@ -13,14 +13,12 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories=Category::orderby('created_at','desc')->get();
-        return CategoryResponse::index($categories);
+        return CategoryResponse::index(Category::orderby('created_at','desc')->get());
     }
 
     public function create()
     {
-        $eatery_types=EateryType::all();
-        return CategoryResponse::create($eatery_types);
+        return CategoryResponse::create(EateryType::all());
     }
 
     public function store(CategoryRequest $request)
@@ -34,22 +32,20 @@ class CategoryController extends Controller
         return CategoryResponse::show($category);
     }
 
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $eatery_types=EateryType::all();
-        $category=Category::find($id);
-        return CategoryResponse::edit($category,$eatery_types);
+        return CategoryResponse::edit($category, EateryType::all());
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-         Category::where('id',$id)->update($request->except('_token','_method'));
+         $category->update($request->except('_token','_method'));
         return CategoryResponse::update();
     }
 
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        Category::where('id',$id)->delete();
+        $category->delete();
         return CategoryResponse::destroy();
     }
 }

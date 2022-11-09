@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\FileManagement\ImageManagement;
+use App\FileManagement\Image;
 use App\Http\Requests\EateryRequest;
 use App\Models\Eatery;
 use App\Models\EateryType;
@@ -31,15 +31,15 @@ class EateryController extends Controller
 
     public function create()
     {
-        $this->authorize('create');
+       $this->authorize('eatery-create');
         $eatery_types=EateryType::all();
         return EateryResponse::create($eatery_types);
     }
 
     public function store(EateryRequest $request)
     {
-        $this->authorize('create');
-        $image_name=ImageManagement::store('eatery',$request);
+        $this->authorize('eatery-create');
+        $image_name=Image::store('eatery',$request);
         Eatery::create($request->except('_token','image')+['image'=>$image_name,'seller_id'=>Auth::guard('seller')->user()->id]);
         Seller::where('id',Auth::guard('seller')->user()->id)->update(['is_verified'=>1]);
         return EateryResponse::store();
@@ -52,16 +52,16 @@ class EateryController extends Controller
 
     public function edit(Eatery $eatery)
     {
-        $this->authorize('update',$eatery);
+        $this->authorize('eatery-update',$eatery);
         $eatery_types=EateryType::all();
         return EateryResponse::edit($eatery,$eatery_types);
     }
 
     public function update(EateryRequest $request,Eatery $eatery)
     {
-        $this->authorize('update',$eatery);
+        $this->authorize('eatery-update',$eatery);
         $image_name=$eatery->image;
-        $request->edit_image && $image_name=ImageManagement::update('eatery',$image_name,$request,'edit_image');
+        $request->edit_image && $image_name=Image::update('eatery',$image_name,$request,'edit_image');
         Eatery::where('id',$eatery->id)
             ->update($request->except('_token','edit_image','_method')+['image'=>$image_name]);
         return EateryResponse::update();
@@ -70,7 +70,7 @@ class EateryController extends Controller
     public function destroy(Eatery $eatery)
     {
         $this->authorize('delete');
-        ImageManagement::remove('eatery',$eatery->image);
+        Image::remove('eatery',$eatery->image);
         Eatery::where('id',$eatery->id)->delete();
         return EateryResponse::destroy();
     }

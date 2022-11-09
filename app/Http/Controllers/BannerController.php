@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\FileManagement\ImageManagement;
+use App\FileManagement\Image;
 use App\Http\Requests\BannerRequest;
 use App\Models\Banner;
 use App\Responses\Facades\BannerResponse;
@@ -17,8 +17,7 @@ class BannerController extends Controller
 
     public function index()
     {
-        $banner=Banner::orderby('created_at','desc')->get();
-        return BannerResponse::index($banner);
+        return BannerResponse::index(Banner::orderby('created_at','desc')->get());
     }
 
     public function create()
@@ -28,7 +27,7 @@ class BannerController extends Controller
 
     public function store(BannerRequest $request)
     {
-        $image_name=ImageManagement::store('banner',$request);
+        $image_name=Image::store('banner',$request);
         Banner::create($request->except('_token','image')+['image'=>$image_name]);
         return BannerResponse::store();
     }
@@ -46,16 +45,15 @@ class BannerController extends Controller
     public function update(BannerRequest $request,Banner $banner)
     {
         $image_name=$banner->image;
-        $request->edit_image && $image_name=ImageManagement::update('banner',$image_name,$request,'edit_image');
-        Banner::where('id',$banner->id)
-            ->update($request->except('_token','edit_image','_method')+['image'=>$image_name]);
+        $request->edit_image && $image_name=Image::update('banner',$image_name,$request,'edit_image');
+        $banner->update($request->except('_token','edit_image','_method')+['image'=>$image_name]);
         return BannerResponse::update();
     }
 
     public function destroy(Banner $banner)
     {
-        ImageManagement::remove('banner',$banner->image);
-        Banner::where('id',$banner->id)->delete();
+        Image::remove('banner',$banner->image);
+        $banner->delete();
         return BannerResponse::destroy();
     }
 }

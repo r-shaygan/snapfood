@@ -44,9 +44,7 @@ class EateryPolicy
      */
     public function create($user)
     {
-        if($user->is_validate)
-            return false;
-        return true;
+        return !$user->is_verified;
     }
 
     /**
@@ -58,9 +56,7 @@ class EateryPolicy
      */
     public function update($user, Eatery $eatery)
     {
-        if( $eatery->seller_id!=$user->id)
-            return false;
-        return true;
+        return $eatery->seller_id==$user->id ;
     }
 
     public function delete(Admin $user, Eatery $eatery)

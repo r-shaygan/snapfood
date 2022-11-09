@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\FileManagement\ImageManagement;
+use App\DataProtection\FoodData;
+use App\FileManagement\Image;
 use App\Http\Requests\FoodRequest;
 use App\Models\Category;
 use App\Models\Eatery;
 use App\Models\Food;
 use App\Responses\Facades\FoodResponse;
+use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,59 +30,62 @@ class FoodController extends Controller
 
     public function index()
     {
-        $eatery_id = $this->getEatery_id();
-        $foods=Food::where('eatery_id',$eatery_id)->get();
-        return FoodResponse::index($foods);
+        return FoodResponse::index(FoodData::index());
     }
 
     public function create()
     {
-        $categories=Category::all();
-        return FoodResponse::create($categories);
+        return FoodResponse::create(Category::all());
     }
 
-    public function store(Request $request)
+    public function store(FoodRequest $request)
     {
-        $eatery_id = $this->getEatery_id();
-        $image_name=ImageManagement::store('food',$request);
-        Food::create($request->except('_token','image')+['image'=>$image_name,'eatery_id'=>$eatery_id]);
+        $this->storeWithImage($request);
         return FoodResponse::store();
     }
 
     public function show(Food $food)
     {
-        return FoodResponse::show($food);
+        return FoodResponse::show(FoodData::show($food));
     }
 
     public function edit(Food $food)
     {
-        $this->authorize('update',$food);
+        $this->authorize('food-update',$food);
         $categories=Category::all();
         return FoodResponse::edit($categories,$food);
     }
 
     public function update(FoodRequest $request, Food $food)
     {
-        $this->authorize('update',$food);
-        $eatery_id = $this->getEatery_id();
-        $image_name=$food->image;
-        $request->edit_image && $image_name=ImageManagement::update('food',$image_name,$request,'edit_image');
-        Food::where('id',$food->id)
-            ->update($request->except('_token','edit_image','_method')+['image'=>$image_name,'eatery_id'=>$eatery_id]);
+        $this->authorize('food-update',$food);
+        $this->updateWithImage($request, $food->image, $food);
         return FoodResponse::update();
-
     }
 
     public function destroy(Food $food)
     {
-        ImageManagement::remove('eatery',$food->image);
-        Food::where('id',$food->id)->delete();
+        $food->delete();
         return FoodResponse::destroy();
     }
 
-    public function getEatery_id()
+    public function getEateryId()
     {
-        $eatery_id = Eatery::where('seller_id', Auth::guard('seller')->user()->id)->select('id')->first()->id;
-        return $eatery_id;
+        return Auth::guard('seller')->user()->eatery->id;
     }
+
+    public function updateWithImage(FoodRequest $request, mixed $image_name, Food $food): void
+    {
+        $request->edit_image && $image_name = Image::update('food', $image_name, $request, 'edit_image');
+        $food->update($request->except('_token', 'edit_image', '_method') +
+            ['image' => $image_name, 'eatery_id' => $this->getEateryId()]);
+    }
+
+    public function storeWithImage(FoodRequest $request): void
+    {
+        $image_name = Image::store('food', $request);
+        Food::create($request->except('_token', 'image') +
+            ['image' => $image_name, 'eatery_id' => $this->getEateryId()]);
+    }
+
 }
