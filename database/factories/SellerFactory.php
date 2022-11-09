@@ -17,10 +17,10 @@ class SellerFactory extends Factory
     public function definition()
     {
         return [
-            'first_name'=>fake()->firstName(),
-            'last_name'=>fake()->lastName(),
-            'email'=>fake()->email(),
-            'phone'=>fake()->phoneNumber(),
+            'first_name'=>'roghayeh',
+            'last_name'=>'shaygan',
+            'email'=>'shaygan1995@gmail.com',
+            'phone'=>'09112233445',
             'password'=>'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'//password
         ];
     }
