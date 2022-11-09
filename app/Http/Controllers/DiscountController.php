@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\DataProtection\DiscountData;
+use App\Http\Requests\DiscountRequest;
+use App\Models\Discount;
+use App\Responses\Seller\DiscountResponse;
+use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DiscountController extends Controller
 {
@@ -13,72 +19,39 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        //
+        return DiscountResponse::index(DiscountData::index());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return DiscountResponse::create();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(DiscountRequest $request)
     {
-        //
+        Discount::create($request->except('_token')+['eatery_id'=>Auth::user()->eatery->id]);
+        return DiscountResponse::store();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(Discount $discount)
     {
-        //
+        return DiscountResponse::show($discount);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Discount $discount)
     {
-        //
+        return DiscountResponse::edit($discount);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(DiscountRequest $request, Discount $discount)
     {
-        //
+        $discount->update($request->except('_token'));
+        return DiscountResponse::update();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Discount $discount)
     {
-        //
+        $discount->delete();
+        return DiscountResponse::delete();
     }
 }
