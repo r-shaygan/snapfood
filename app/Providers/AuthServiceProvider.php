@@ -8,6 +8,7 @@ use App\Models\Food;
 use App\Policies\EateryPolicy;
 use App\Policies\FoodPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('eatery-create',[EateryPolicy::class,'create']);
+        Gate::define('food-create',[FoodPolicy::class,'create']);
+
+        Gate::define('eatery-update',[EateryPolicy::class,'update']);
+        Gate::define('food-update',[FoodPolicy::class,'update']);
     }
 }
