@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin,seller,web')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -37,5 +38,11 @@ Route::middleware('guest:admin,seller,web')->group(function () {
         ->name('seller.login');
 
     Route::post('seller/login', [\App\Http\Controllers\Seller\AuthenticatedSessionController::class, 'store']);
+
+    Route::get('seller/register', [\App\Http\Controllers\Seller\RegistereController::class, 'create'])
+        ->name('seller.register');
+
+    Route::post('seller/register', [\App\Http\Controllers\Seller\RegistereController::class, 'store']);
+
 
 });
