@@ -16,7 +16,8 @@ class EateryType extends Model
         $this->hasMany(Category::class,'eatery_type_id','id');
     }
 
-    public function eateries(){
+    public function eateries()
+    {
         $this->hasMany(Eatery::class,'type','id');
     }
 }
