@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\SendResponse;
 use App\Listeners\AdminResponse;
 use App\Listeners\HttpResponse;
+use App\Listeners\JsonResponse;
 use App\Listeners\SellerResponse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -25,6 +26,7 @@ class EventServiceProvider extends ServiceProvider
         SendResponse::class => [
             SellerResponse::class,
             AdminResponse::class,
+            JsonResponse::class,
             HttpResponse::class
         ]
     ];
