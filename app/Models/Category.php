@@ -10,7 +10,13 @@ class Category extends Model
     use HasFactory;
     protected $guarded=['created_at','updated_at'];
 
-    public function eateryType(){
+    public function eateryType()
+    {
         return $this->belongsTo(EateryType::class,'eatery_type_id','id','eatery_types');
+    }
+
+    public function foods()
+    {
+        return $this->hasMany(Food::class);
     }
 }
