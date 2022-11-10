@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DataProtection\FoodData;
+use App\GetData\FoodData;
 use App\FileManagement\Image;
 use App\Http\Requests\FoodRequest;
 use App\Models\Category;

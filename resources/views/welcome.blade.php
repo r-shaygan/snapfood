@@ -12,7 +12,7 @@
 <div class="rounded shadow-lg w-1/4 h-[20rem] mx-auto mt-32 py-8">
 <div class="py-4 mt-2 mx-4 text-center text-lg bg-gray-700 text-white"><a href="{{route('admin.login')}}"> ورود به عنوان مدیر</a></div>
 <div class="py-4 mt-2 mx-4 text-center text-lg bg-gray-700 text-white"><a href="{{route('seller.login')}}"> ورود به عنوان فروشنده</a></div>
-{{--<div class="py-4 mt-2 mx-4 text-center text-lg bg-gray-700 text-white"><a href="{{route('seller.register')}}"> ثبت نام فروشنده</a></div>--}}
+<div class="py-4 mt-2 mx-4 text-center text-lg bg-gray-700 text-white"><a href="{{route('seller.register')}}"> ثبت نام فروشنده</a></div>
 </div>
 </body>
 </html>
