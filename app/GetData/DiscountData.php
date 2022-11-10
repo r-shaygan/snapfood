@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataProtection;
+namespace App\GetData;
 
 use App\Models\Discount;
 use Illuminate\Support\Facades\Auth;
