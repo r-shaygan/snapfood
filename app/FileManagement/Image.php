@@ -11,7 +11,7 @@ class Image
     public static function store(string $name,BannerRequest|Request $request,string $input='image')
     {
         File::ensureDirectoryExists(public_path(config("image.{$name}")));
-        $image_name="pic".microtime().$request->$input->getClientOriginalName();
+        $image_name = self::setImgName($input, $request);
         $request->$input->move(public_path(config("image.{$name}")),$image_name );
         return $image_name;
     }
@@ -24,6 +24,11 @@ class Image
     public static function update(string $name,string $image_name,BannerRequest|Request $request,string $input='image'){
         self::remove($name,$image_name);
         return self::store($name,$request,$input);
+    }
+
+    public static function setImgName(string $input, BannerRequest|Request $request): string
+    {
+        return "pic" . microtime() . $request->$input->getClientOriginalName();
     }
 
 }
