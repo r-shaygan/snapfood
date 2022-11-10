@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\DataProtection\DiscountData;
+use App\GetData\DiscountData;
 use App\Http\Requests\DiscountRequest;
 use App\Models\Discount;
-use App\Responses\Seller\DiscountResponse;
+use App\Responses\Facades\DiscountResponse;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
