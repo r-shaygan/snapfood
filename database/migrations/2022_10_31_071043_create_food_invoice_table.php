@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create('food_invoice', function (Blueprint $table) {
             $table->unsignedBigInteger('invoice_id');
             $table->unsignedBigInteger('food_id');
+            $table->unsignedInteger('count');
+            $table->foreign('invoice_id')->on('invoices')->references('id');
+            $table->foreign('food_id')->on('foods')->references('id');
         });
     }
 

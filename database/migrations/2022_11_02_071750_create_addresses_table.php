@@ -18,7 +18,9 @@ return new class extends Migration
             $table->text('address_text');
             $table->decimal('address_long');
             $table->decimal('address_lat');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade');
         });
     }
 
