@@ -38,7 +38,7 @@ class Eatery extends Model
         return $this->belongsToMany(Category::class,'foods');
     }
 
-    public function scopeFilterType($query, $type_id)
+/*    public function scopeFilterType($query, $type_id)
     {
         return $query->where('type', $type_id);
     }
@@ -47,5 +47,14 @@ class Eatery extends Model
     {
         $currentTime=date('H:i');
         return $query->where('opening_time','<',$currentTime)->where('closing_time','>',$currentTime);
+    }*/
+
+    public function scopeFilter($query,array $filter)
+    {
+        $currentTime=date('H:i');
+        if (key_exists('type',$filter))
+            $query->where('type', $filter['type']);
+        if(key_exists('is_open',$filter))
+            return $query->where('opening_time','<',$currentTime)->where('closing_time','>',$currentTime);
     }
 }

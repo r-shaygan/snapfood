@@ -32,7 +32,7 @@ class EateryController extends Controller
 
     public function index(Request $request)
     {
-        $eateries = $this->filterEateries($request);
+        $eateries = Eatery::filter($request->query())->get();
         return EateryResponse::index($eateries);
     }
 
@@ -85,29 +85,5 @@ class EateryController extends Controller
         $eatery->delete();
         Image::remove('eatery', $eatery->image);
         return EateryResponse::destroy();
-    }
-
-    public function filteredEatery($query1, $query2)
-    {
-        if ($query1 && $query2)
-            return $query1->$query2->get();
-        elseif ($query1)
-            $eateries = $query1->get();
-        elseif ($query2)
-            $eateries = $query2->get();
-        else
-            $eateries = Eatery::all();
-        return $eateries;
-    }
-
-    public function filterEateries(Request $request)
-    {
-        if ($request->exists('type') && $request->exists('is_open'))
-            return Eatery::filterType($request->type)->filterIsOpen()->get();
-        elseif ($request->exists('type'))
-            return Eatery::filterType($request->type)->get();
-        elseif ($request->exists('type'))
-            return Eatery::filterIsOpen()->get();
-        return Eatery::all();
     }
 }
