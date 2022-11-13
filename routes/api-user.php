@@ -2,7 +2,7 @@
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/logout', [\App\Http\Controllers\user\AuthController::class, 'logout']);
+    Route::post('/logout', [\App\Http\Controllers\user\AuthController::class, 'logout']);
 
     //foods
     Route::get('/eateries/{eatery}/foods', [\App\Http\Controllers\EateryController::class, 'foods']);
