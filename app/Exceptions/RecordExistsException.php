@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class RecordExistsException extends HttpException
 {
-    public function __construct(string $message = 'record is already exists', \Throwable $previous = null, int $code = 405, array $headers = [])
+    public function __construct(string $message = 'Record Already Exists', \Throwable $previous = null, int $code = 405, array $headers = [])
     {
         parent::__construct(405, $message, $previous, $headers, $code);
     }
