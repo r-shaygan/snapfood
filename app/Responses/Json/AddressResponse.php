@@ -18,10 +18,12 @@ class AddressResponse
             : response(['status' => 'This address already exist'], 401);
     }
 
-    public function setDefault($success)
+    public function setDefault($success,$default)
     {
-        return $success ? response(['status' => 'address is set as default successfully'], 201)
-            : response(['status' => 'invalid information'], 401);
+        return $success ? response([
+            'default'=>AddressResource::make($default),
+            'message' => 'address is set as default successfully'], 201)
+            : response(['message' => 'invalid information'], 401);
     }
 
     public function update($success)
