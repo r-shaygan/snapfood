@@ -42,16 +42,8 @@ class AddressController extends Controller
         return AddressResponse::destroy($success);
     }
 
-    public function addressExists(AddressRequest $request)
+    public function isUserAddress($address)
     {
-       return Address::where('address_long', $request->address_long)
-            ->where('address_lat', $request->address_lat)
-            ->where('user_id', Auth::user()->id)
-            ->exists();
-    }
-
-    public function isUserAddress($id)
-    {
-        return Address::find($id)->user_id == Auth::user()->id;
+        return $address->user->id == Auth::user()->id;
     }
 }
