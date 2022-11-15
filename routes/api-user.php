@@ -13,6 +13,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //address
     Route::apiResource('addresses', \App\Http\Controllers\AddressController::class,['except'=>'show']);
-    Route::get('addresses/{id}/default',[\App\Http\Controllers\AddressController::class,'setDefault']);
+    Route::get('addresses/{address}/default',[\App\Http\Controllers\AddressController::class,'setDefault']);
 
 });
