@@ -7,6 +7,8 @@ use App\Listeners\AdminResponse;
 use App\Listeners\HttpResponse;
 use App\Listeners\JsonResponse;
 use App\Listeners\SellerResponse;
+use App\Models\Address;
+use App\Observers\AddressObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -38,7 +40,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Address::observe(AddressObserver::class);
     }
 
     /**
