@@ -27,25 +27,21 @@ class AddressController extends Controller
 
     public function setDefault(Address $address)
     {
-        $success=$this->isUserAddress($address) && Auth::user()->update(['default_address'=>$address->id]);
+        $this->authorize('update',$address);
+        $success=Auth::user()->update(['default_address'=>$address->id]);
         return AddressResponse::setDefault($success,Auth::user()->defaultAddress);
     }
 
     public function update(AddressRequest $request, Address $address)
     {
         $request->addressExists();
-        $success=$this->isUserAddress($address->id) && $address->update($request->all());
-        return AddressResponse::update($success);
+        $this->authorize('update',$address);
+        return AddressResponse::update( $address->update($request->all()));
     }
 
     public function destroy(Address $address)
     {
-        $success=$this->isUserAddress($address->id) && $address->delete();
-        return AddressResponse::destroy($success);
-    }
-
-    public function isUserAddress($address)
-    {
-        return $address->user->id == Auth::user()->id;
+        $this->authorize('delete',$address);
+        return AddressResponse::destroy($address->delete());
     }
 }

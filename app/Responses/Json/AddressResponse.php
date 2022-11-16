@@ -14,28 +14,28 @@ class AddressResponse
 
     public function store($address)
     {
-        return $address ? response(['address'=>AddressResource::make($address), 'status' => 'address added sucsessfull'], 201)
-            : response(['status' => 'This address already exist'], 401);
+        return $address ? response(['address'=>AddressResource::make($address), 'message' => 'Address Added Sucsessfully'], 201)
+            : response(['message' => 'SomeThing Went Wrong!'], 401);
     }
 
     public function setDefault($success,$default)
     {
         return $success ? response([
             'default'=>AddressResource::make($default),
-            'message' => 'address is set as default successfully'], 201)
-            : response(['message' => 'invalid information'], 401);
+            'message' => 'Address Set As Default Successfully'], 201)
+            : response(['message' => 'SomeThing Went Wrong!'], 401);
     }
 
     public function update($success)
     {
-        return $success ? response(['status' => 'address updated successfully'], 201)
-            : response(['status' => 'invalid information'], 401);
+        return $success ? response(['message' => 'Address Updated Successfully'], 201)
+            : response(['message' => 'SomeThing Went Wrong!'], 401);
     }
 
     public function destroy($success)
     {
-        return $success ? response(['status' => 'address deleted successfully'], 201)
-            : response(['status' => 'invalid information'], 401);
+        return $success ? response(['message' => 'Address Deleted Successfully'], 201)
+            : response(['message' => 'SomeThing Went Wrong!'], 401);
     }
 
 
