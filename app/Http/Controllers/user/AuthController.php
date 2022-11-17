@@ -4,14 +4,14 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function register(UserRequest $request)
+    public function register(RegisterRequest $request)
     {
         $user=User::create($request->all());
         $token=$user->createToken('userAuthToken')->plainTextToken;
