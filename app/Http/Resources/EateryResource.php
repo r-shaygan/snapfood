@@ -20,7 +20,8 @@ class EateryResource extends JsonResource
             'phone'=>$this->phone,
             'delivery_cost'=>$this->deliveryCost,
             'image'=>URL::to(config('eatery').$this->image),
-            'type'=>EateryTypeResource::make($this->eateryType)
+            'type'=>EateryTypeResource::make($this->eateryType),
+            'schedule'=>ScheduleResource::collection($this->workTimes)
         ];
     }
 }

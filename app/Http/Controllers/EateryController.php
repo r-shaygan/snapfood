@@ -7,6 +7,7 @@ use App\Http\Requests\EateryRequest;
 use App\Models\Eatery;
 use App\Models\EateryType;
 use App\Models\Seller;
+use App\Models\WorkTime;
 use App\Responses\Facades\EateryResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -47,9 +48,11 @@ class EateryController extends Controller
     public function store(EateryRequest $request)
     {
         $this->authorize('eatery-create');
-        $image_name = Image::store('eatery', $request);
-        Eatery::create($request->except('_token', 'image') + ['image' => $image_name, 'seller_id' => Auth::guard('seller')->user()->id]);
-        Seller::where('id', Auth::guard('seller')->user()->id)->update(['is_verified' => 1]);
+        DB::beginTransaction();
+        $eatery = $this->storeWithImage($request);
+        $this->insertWorkingTime($request->input('work'),$eatery->id);
+        $this->varifySeller();
+        DB::commit();
         return EateryResponse::store();
     }
 
@@ -85,5 +88,31 @@ class EateryController extends Controller
         $eatery->delete();
         Image::remove('eatery', $eatery->image);
         return EateryResponse::destroy();
+    }
+
+    private function insertWorkingTime(array $input,int $eatery_id)
+    {
+        $records=[];
+        foreach ($input as $day=>$times){
+            $records[]=[
+                'day'=>$day,
+                'open'=>$times['open'],
+                'close'=>$times['close'],
+                'eatery_id'=>$eatery_id
+            ];
+        }
+        WorkTime::create($records);
+    }
+
+    public function varifySeller(): void
+    {
+        Seller::where('id', Auth::guard('seller')->user()->id)->update(['is_verified' => 1]);
+    }
+
+    public function storeWithImage(EateryRequest $request)
+    {
+        $image_name = Image::store('eatery', $request);
+        $eatery = Eatery::create($request->except('_token', 'image', 'work') + ['image' => $image_name, 'seller_id' => Auth::guard('seller')->user()->id]);
+        return $eatery;
     }
 }

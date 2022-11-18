@@ -38,23 +38,22 @@ class Eatery extends Model
         return $this->belongsToMany(Category::class,'foods');
     }
 
-/*    public function scopeFilterType($query, $type_id)
+    public function workTimes()
     {
-        return $query->where('type', $type_id);
+        return $this->hasMany(WorkTime::class);
     }
-
-    public function scopeFilterIsOpen($query)
-    {
-        $currentTime=date('H:i');
-        return $query->where('opening_time','<',$currentTime)->where('closing_time','>',$currentTime);
-    }*/
 
     public function scopeFilter($query,array $filter)
     {
         $currentTime=date('H:i');
+        $currentDate=date('D');
         if (key_exists('type',$filter))
             $query->where('type', $filter['type']);
         if(key_exists('is_open',$filter))
-            return $query->where('opening_time','<',$currentTime)->where('closing_time','>',$currentTime);
+             $query->join('work_times','eateries.id','=','eatery_id')->where('day','like',$currentDate)
+                 ->select('eateries.*')
+                 ->where('open','<',$currentTime)
+                 ->where('close','>',$currentTime);
+        return $query;
     }
 }

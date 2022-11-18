@@ -32,8 +32,6 @@ class EateryRequest extends FormRequest
             'deliveryCost'=>'required|integer',
             'credit'=>'required|numeric',
             'image'=>'sometimes|required|mimes:jpg,bmp,png|max:1024',
-            'opening_time'=>'required',
-            'closing_time'=>'required',
             'edit_image'=>'mimes:jpg,bmp,png|max:1024'
         ];
     }

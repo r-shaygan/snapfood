@@ -20,39 +20,75 @@
             @error('name') <div class="my-2 text-red-500 ">{{$message}}</div> @enderror
         </div>
         <div class="my-8">
-            <label class="inline-block ml-8 w-1/8">شماره تماس رستوران : </label>
+            <label class="inline-block ml-8 w-1/4">شماره تماس رستوران : </label>
             <input  value="{{old('phone')}}" name="phone" class="inline-block w-1/2 py-2 h-8 rounded outline-none border">
             @error('phone') <div class="my-2 text-red-500 ">{{$message}}</div> @enderror
         </div>
         <div class="my-8">
-            <label class="inline-block ml-2 w-1/8">عرض جغرافیایی :</label>
-            <input  value="{{old('address_lat')}}" name="address_lat" class="inline-block w-1/3 py-2 h-8 rounded outline-none border">
-            <label class="inline-block ml-2 w-1/8">طول جغرافیایی : </label>
-            <input value="{{old('address_long')}}" name="address_long" class="inline-block w-1/3 py-2 h-8 rounded outline-none border">
+            <label class="inline-block ml-2 w-1/4">عرض جغرافیایی :</label>
+            <input  value="{{old('address_lat')}}" name="address_lat" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+            <label class="inline-block ml-2 w-1/4">طول جغرافیایی : </label>
+            <input value="{{old('address_long')}}" name="address_long" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
         </div>
         @error('address_long') <div class="my-2 text-red-500 ">{{$message}}</div> @enderror
         @error('address_lat') <div class="my-2 text-red-500 ">{{$message}}</div> @enderror
         <div class="my-8">
-            <label class="inline-block ml-8 w-1/8">آدرس رستوران : </label>
+            <label class="inline-block ml-8 w-1/4">آدرس رستوران : </label>
             <textarea name="address_text"
                       class="inline-block w-1/2 py-2 h-16 align-middle  rounded outline-none border">{{old('address_lat')}}</textarea>
             @error('address_text') <div class="my-2 text-red-500 ">{{$message}}</div> @enderror
         </div>
         <div class="my-8">
-            <label class="inline-block ml-8 w-1/8">شماره حساب : </label>
+            <label class="inline-block ml-8 w-1/4">شماره حساب : </label>
             <input value="{{old('credit')}}" name="credit" class="inline-block w-1/2 py-2 h-8 rounded outline-none border">
             @error('credit') <div class="my-2 text-red-500 ">{{$message}}</div> @enderror
         </div>
         <div class="my-8">
-            <label class="inline-block ml-8 w-1/8">هزینه ارسال پیک : </label>
+            <label class="inline-block ml-8 w-1/4">هزینه ارسال پیک : </label>
             <input value="{{old('deliveryCost')}}" name="deliveryCost" class="inline-block w-1/2 py-2 h-8 rounded outline-none border">
             @error('deliveryCost') <div class="my-2 text-red-500 ">{{$message}}</div> @enderror
         </div>
         <div class="my-8">
-            <label class="inline-block ml-2 w-1/8">زمان شروع کار :</label>
-            <input type="time" name="opening_time" class="inline-block w-1/3 py-2 h-8 rounded outline-none border">
-            <label class="inline-block ml-2 w-1/8">زمان پایان کار: </label>
-            <input type="time" name="closing_time" class="inline-block w-1/3 py-2 h-8 rounded outline-none border">
+            <label class="inline-block ml-2 w-1/4">زمان شروع کار شنبه :</label>
+            <input type="time" name="work[sat][open]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+            <label class="inline-block ml-2 w-1/4">زمان پایان کار شنبه: </label>
+            <input type="time" name="work[sat][close]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+        </div>
+        <div class="my-8">
+            <label class="inline-block ml-2 w-1/4">زمان شروع کار یک شنبه :</label>
+            <input type="time" name="work[sun][open]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+            <label class="inline-block ml-2 w-1/4">زمان پایان کار یک شنبه: </label>
+            <input type="time" name="work[sun][close]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+        </div>
+        <div class="my-8">
+            <label class="inline-block ml-2 w-1/4">زمان شروع کار دوشنبه :</label>
+            <input type="time" name="work[mon][open]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+            <label class="inline-block ml-2 w-1/4">زمان پایان کار دوشنبه: </label>
+            <input type="time" name="work[mon][close]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+        </div>
+        <div class="my-8">
+            <label class="inline-block ml-2 w-1/4">زمان شروع کار سه شنبه :</label>
+            <input type="time" name="work[tue][open]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+            <label class="inline-block ml-2 w-1/4">زمان پایان کار سه شنبه: </label>
+            <input type="time" name="work[tue][close]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+        </div>
+        <div class="my-8">
+            <label class="inline-block ml-2 w-1/4">زمان شروع کار چهار شنبه :</label>
+            <input type="time" name="work[wed][open]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+            <label class="inline-block ml-2 w-1/4">زمان پایان کار چهار شنبه: </label>
+            <input type="time" name="work[wed][close]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+        </div>
+        <div class="my-8">
+            <label class="inline-block ml-2 w-1/4">زمان شروع کار پنج شنبه :</label>
+            <input type="time" name="work[thus][open]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+            <label class="inline-block ml-2 w-1/4">زمان پایان کار پنج شنبه: </label>
+            <input type="time" name="work[thus][close]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+        </div>
+        <div class="my-8">
+            <label class="inline-block ml-2 w-1/4">زمان شروع کار جمعه :</label>
+            <input type="time" name="work[fri][open]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
+            <label class="inline-block ml-2 w-1/4">زمان پایان کار جمعه : </label>
+            <input type="time" name="work[fri][close]" class="inline-block w-1/5 py-2 h-8 rounded outline-none border">
         </div>
         <div class="my-16">
             <label class="block my-3">نوع کیترینگ</label>
@@ -64,7 +100,7 @@
             @error('eatery_type_id') <div class="my-2 text-red-500">{{$message}}</div> @enderror
         </div>
         <div class="my-8">
-        <label class="inline-block ml-8 w-1/8">انتخاب تصویر: </label>
+        <label class="inline-block ml-8 w-1/4">انتخاب تصویر: </label>
         <input name="image" type="file">
         </div>
         @error('image') <div class="my-2 text-red-500 ">{{$message}}</div> @enderror
