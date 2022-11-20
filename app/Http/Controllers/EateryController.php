@@ -101,7 +101,7 @@ class EateryController extends Controller
                 'eatery_id'=>$eatery_id
             ];
         }
-        WorkTime::create($records);
+        WorkTime::insert($records);
     }
 
     public function varifySeller(): void
