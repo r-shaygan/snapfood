@@ -35,7 +35,7 @@ class FoodController extends Controller
 
     public function create()
     {
-        return FoodResponse::create(Category::all());
+        return FoodResponse::create(Category::all(),$this->getEatery()->discounts);
     }
 
     public function store(FoodRequest $request)
@@ -53,7 +53,7 @@ class FoodController extends Controller
     {
         $this->authorize('food-update',$food);
         $categories=Category::all();
-        return FoodResponse::edit($categories,$food);
+        return FoodResponse::edit($categories,$this->getEatery()->discounts,$food);
     }
 
     public function update(FoodRequest $request, Food $food)
@@ -69,23 +69,23 @@ class FoodController extends Controller
         return FoodResponse::destroy();
     }
 
-    public function getEateryId()
+    public function getEatery()
     {
-        return Auth::guard('seller')->user()->eatery->id;
+        return Auth::guard('seller')->user()->eatery;
     }
 
     public function updateWithImage(FoodRequest $request, mixed $image_name, Food $food): void
     {
         $request->edit_image && $image_name = Image::update('food', $image_name, $request, 'edit_image');
         $food->update($request->except('_token', 'edit_image', '_method') +
-            ['image' => $image_name, 'eatery_id' => $this->getEateryId()]);
+            ['image' => $image_name, 'eatery_id' => $this->getEatery()->id]);
     }
 
     public function storeWithImage(FoodRequest $request): void
     {
         $image_name = Image::store('food', $request);
         Food::create($request->except('_token', 'image') +
-            ['image' => $image_name, 'eatery_id' => $this->getEateryId()]);
+            ['image' => $image_name, 'eatery_id' => $this->getEatery()->id]);
     }
 
 }

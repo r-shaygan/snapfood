@@ -22,6 +22,14 @@
                 </select>
                 @error('category_id') <div class="my-2 text-red-500">{{$message}}</div> @enderror
             </div>
+            <div class="my-16">
+                <label class="block my-3">انتخاب تخفیف</label>
+                <select name="discount_id">
+                    @foreach($discounts as $discount)
+                        <option value="{{$discount->id}}">{{$discount->code}}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="my-8">
                 <label class="block my-3">مواد اولیه :</label>
                 <textarea name="ingredients" class="inline-block w-1/2 py-2 h-16 align-middle  rounded outline-none border">{{old('image')}}</textarea>

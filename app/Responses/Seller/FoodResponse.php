@@ -8,9 +8,8 @@ class FoodResponse
         return view('seller.food.index',compact('foods'));
     }
 
-    public function create($categories){
-
-        return view('seller.food.create',compact('categories'));
+    public function create($categories,$discounts){
+        return view('seller.food.create',compact('categories','discounts'));
     }
 
     public function store(){
@@ -18,8 +17,8 @@ class FoodResponse
         return redirect()->route('seller.foods.index');
     }
 
-    public function edit($categories,$food){
-        return view('seller.food.edit',compact('categories','food'));
+    public function edit($categories,$discounts,$food){
+        return view('seller.food.edit',compact('categories','discounts','food'));
     }
 
     public function update(){

@@ -9,11 +9,25 @@
                 <div >
                     {{$food->title}}
             </div >
+            </div>
+            <div class="my-8">
+                <label class="block my-3">کد تخفیف :</label>
+                <div >
+                    {{$food->discount->code}}
+            </div >
+            </div>
             <div class="my-8">
                 <label class="block my-3">قیمت :</label>
                 <div >
                     {{$food->cost}}
                 </div >
+            </div>
+                      <div class="my-8">
+                <label class="block my-3">قیمت با تخفیف:</label>
+                <div class="text-green-400" >
+                    {{$food->cost *(100-$food->discount->percent)/100 }}
+                </div >
+            </div>
             <div class="my-16">
                 <label class="block my-3">دسته یندی مرتبط</label>
                 <div>{{$food->category->title}}</div>
