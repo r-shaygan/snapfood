@@ -63,7 +63,7 @@ class EateryController extends Controller
 
     public function foods(Eatery $eatery)
     {
-        return EateryResponse::foods($eatery->categories);
+        return EateryResponse::foods($eatery);
     }
 
     public function edit(Eatery $eatery)

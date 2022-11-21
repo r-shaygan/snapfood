@@ -18,6 +18,12 @@ class Eatery extends Model
         return $this->hasMany(Food::class);
     }
 
+    public function filteredFoods($category_id)
+    {
+        return Food::where('eatery_id',$this->id)
+            ->where('category_id',$category_id)->get();
+    }
+
     public function seller()
     {
         return $this->belongsTo(Seller::class);

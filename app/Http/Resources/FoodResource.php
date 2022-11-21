@@ -7,12 +7,6 @@ use Illuminate\Support\Facades\URL;
 
 class FoodResource extends JsonResource
 {
-    public function __construct($resource)
-    {
-        parent::__construct($resource);
-        self::$wrap='Food';
-    }
-
     public function toArray($request)
     {
         return [

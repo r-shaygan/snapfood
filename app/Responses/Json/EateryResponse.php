@@ -3,6 +3,7 @@
 namespace App\Responses\Json;
 
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\EateryCategoryResource;
 use App\Http\Resources\EateryResource;
 
 class EateryResponse
@@ -15,9 +16,9 @@ class EateryResponse
     {
         return EateryResource::make($eatery);
     }
-    public function foods($categories)
+    public function foods($eatery)
     {
-        return CategoryResource::collection($categories);
+        return ['Categories'=>EateryCategoryResource::make($eatery)];
     }
 
 }
