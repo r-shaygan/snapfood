@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Discount extends Model
 {
@@ -13,5 +15,12 @@ class Discount extends Model
     public function eatery()
     {
         return $this->belongsTo(Eatery::class);
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope('expired', function (Builder $builder) {
+            $builder->where('end', '>', date('Y:m:d H:i') );
+        });
     }
 }
