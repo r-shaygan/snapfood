@@ -49,6 +49,11 @@ class Eatery extends Model
         return $this->hasMany(WorkTime::class);
     }
 
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
     public function scopeFilter($query,array $filter)
     {
         $currentTime=date('H:i');
