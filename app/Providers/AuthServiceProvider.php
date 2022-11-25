@@ -4,11 +4,15 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Address;
+use App\Models\Cart;
 use App\Models\Eatery;
 use App\Models\Food;
+use App\Models\Invoice;
 use App\Policies\AddressPolicy;
+use App\Policies\CartPolicy;
 use App\Policies\EateryPolicy;
 use App\Policies\FoodPolicy;
+use App\Policies\InvoicePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -23,7 +27,9 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         Eatery::class=>EateryPolicy::class,
         Food::class=>FoodPolicy::class,
-        Address::class=>AddressPolicy::class
+        Address::class=>AddressPolicy::class,
+        Cart::class=>CartPolicy::class,
+        Invoice::class=>InvoicePolicy::class
     ];
 
     /**
