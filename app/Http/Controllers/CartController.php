@@ -49,7 +49,7 @@ class CartController extends Controller
         if (!$this->foodIsExist($request->food_id))
             throw new NotFoundHttpException('this food is not exist in your cart!');
         if (!$request->count)
-            $this->delete($request->food_id, $id);
+            $this->deleteFood($request->food_id, $id);
         else
             $this->updateFoodCount($id, $request->food_id, $request->count);
         return CartResponse::update($id);
@@ -104,7 +104,7 @@ class CartController extends Controller
         return DB::table('food_invoice')->insert($cartFood);
     }
 
-    private function delete($food_id, $cart_id)
+    private function deleteFood($food_id, $cart_id)
     {
         DB::table('cart_food')
             ->where('food_id', $food_id)
@@ -201,5 +201,15 @@ class CartController extends Controller
             ->where('cart_id', $cart_id)
             ->exists();
       return !$exists;
+    }
+
+    private function delete(Cart $cart)
+    {
+        DB::beginTransaction();
+        DB::table('cart_food')
+            ->where('cart_id', $cart->id)
+            ->delete();
+        $cart->delete();
+        DB::commit();
     }
 }
