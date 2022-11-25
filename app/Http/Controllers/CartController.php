@@ -134,14 +134,13 @@ class CartController extends Controller
         return Food::findOrFail($food_id)->eatery_id;
     }
 
-    private function InsertInCartIfFoodNotExist($eatery_id, CartRequest $request): void
+    private function InsertInCartIfFoodNotExist($eatery_id, CartRequest $request)
     {
         DB::beginTransaction();
         $cart_id = $this->insertIntoCart($eatery_id);
         $this->insertIntoCartFood($request->food_id, $request->count, $cart_id);
         DB::commit();
-        return;
-        $cart_id;
+        return  $cart_id;
     }
 
     private function cartIsExist($eatery_id, int $id)
