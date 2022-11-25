@@ -26,7 +26,7 @@ class CartResponse
     public function store($cart_id)
     {
         return response()->json([
-            'message'=>'this food added to your cart successfully',
+            'message'=> __('shopping.cart.add.success',[],'en'),
             'cart_id'=>$cart_id
         ],201);
     }
@@ -34,7 +34,7 @@ class CartResponse
     public function update($cart_id)
     {
         return response()->json([
-            'message' => 'this food in your cart updated  cart successfully',
+            'message' =>  __('shopping.cart.update.success',[],'en'),
             'cart_id'=>$cart_id
             ]);
     }
